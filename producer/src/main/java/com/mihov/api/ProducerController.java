@@ -38,6 +38,6 @@ public class ProducerController{
     @RequestBody JsonNode message
   ) {
     kafkaTemplate.send(topicName, message);
-    logger.debug("Produce message: {}", message);
+    logger.debug("Message sent: {}", message);
   }
 }
