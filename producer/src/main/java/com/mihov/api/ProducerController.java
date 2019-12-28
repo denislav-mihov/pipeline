@@ -1,6 +1,5 @@
 package com.mihov.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class ProducerController{
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public void produceMessage(
-    @RequestBody JsonNode message
+    @RequestBody SimpleDto message
   ) {
     kafkaTemplate.send(topicName, message);
     logger.debug("Message sent: {}", message);

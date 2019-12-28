@@ -1,6 +1,5 @@
 package com.mihov.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class ConsumerController{
   }
 
   @KafkaListener(topics = "${kafka.topic.name}", groupId = "group1", containerFactory = "kafkaListenerContainerFactory")
-  public void listen(@Payload JsonNode message) {
+  public void listen(@Payload SimpleDto message) {
     logger.debug("Message received :{}", message);
 
     mongoTemplate.insert(message, "collection1");
