@@ -7,7 +7,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Denis on 28-Dec-19.
@@ -19,11 +20,12 @@ public class ConsumerController{
 
   private static final Logger logger = LoggerFactory.getLogger(ConsumerController.class);
 
+  private final CountDownLatch latch;
   private final MongoTemplate mongoTemplate;
 
   @Autowired
-  public ConsumerController(MongoTemplate mongoTemplate) {
-    Assert.notNull(mongoTemplate, "MongoTemplate can not be null");
+  public ConsumerController(CountDownLatch latch, MongoTemplate mongoTemplate) {
+    this.latch = latch;
     this.mongoTemplate = mongoTemplate;
   }
 
@@ -32,6 +34,8 @@ public class ConsumerController{
     logger.debug("Message received :{}", message);
 
     mongoTemplate.insert(message, "collection1");
-    logger.debug("1 message inserted");
+    logger.debug("1 message stored in db");
+
+    latch.countDown();
   }
 }

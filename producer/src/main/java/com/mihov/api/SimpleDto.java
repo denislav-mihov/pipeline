@@ -1,5 +1,7 @@
 package com.mihov.api;
 
+import java.util.Objects;
+
 /**
  * Created by Denis on 28-Dec-19.
  *
@@ -38,5 +40,19 @@ public class SimpleDto{
       "name='" + name + '\'' +
       ", type='" + type + '\'' +
       '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    SimpleDto simpleDto = (SimpleDto) o;
+    return Objects.equals(getName(), simpleDto.getName()) &&
+      Objects.equals(getType(), simpleDto.getType());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getName(), getType());
   }
 }

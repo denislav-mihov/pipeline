@@ -15,6 +15,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Denis on 28-Dec-19.
@@ -46,14 +47,15 @@ public class KafkaConsumerConfig{
 
   }
 
-
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
-
     ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
-
     factory.setConsumerFactory(consumerFactory());
-
     return factory;
+  }
+
+  @Bean
+  CountDownLatch latch() {
+    return new CountDownLatch(1);
   }
 }

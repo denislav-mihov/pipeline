@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
  *
  * @author Denis
  */
+
 @Configuration
 public class DatabaseConfig extends AbstractMongoClientConfiguration {
 
