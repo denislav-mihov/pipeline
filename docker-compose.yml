@@ -1,11 +1,13 @@
-version: '2'
+version: '3'
 services:
   zookeeper:
     image: wurstmeister/zookeeper
+    container_name: zookeeper
     ports:
     - "2181:2181"
   kafka:
     image: wurstmeister/kafka
+    container_name: kafka
     ports:
     - "9092:9092"
     environment:
@@ -14,3 +16,13 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
       KAFKA_LISTENERS: PLAINTEXT://:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.99.100:9092
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    command: mongod --auth
+    environment:
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_INITDB_ROOT_USERNAME=admindb
+      - MONGO_INITDB_ROOT_PASSWORD=admindb
