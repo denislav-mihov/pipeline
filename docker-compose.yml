@@ -10,12 +10,15 @@ services:
     container_name: kafka
     ports:
     - "9092:9092"
+    - "29092:29092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
+      KAFKA_LISTENERS: LISTENER_INT://kafka:29092,LISTENER_EXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_INT://kafka:29092,LISTENER_EXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_INT:PLAINTEXT,LISTENER_EXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_INT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
-      KAFKA_LISTENERS: PLAINTEXT://:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.99.100:9092
+
   mongo:
     image: mongo:latest
     container_name: mongodb
@@ -26,3 +29,17 @@ services:
       - MONGO_INITDB_DATABASE=admin
       - MONGO_INITDB_ROOT_USERNAME=admindb
       - MONGO_INITDB_ROOT_PASSWORD=admindb
+  producer:
+    image: dmihov/pipeline-producer
+    container_name: producer
+    ports:
+      - "8081:8081"
+  consumer:
+    image: dmihov/pipeline-consumer
+    container_name: consumer
+  reader:
+    image: dmihov/pipeline-reader
+    container_name: reader
+    ports:
+      - "8082:8082"
+
