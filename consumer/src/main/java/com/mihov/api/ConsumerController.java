@@ -30,10 +30,10 @@ public class ConsumerController{
   }
 
   @KafkaListener(topics = "${kafka.topic.name}", groupId = "group1", containerFactory = "kafkaListenerContainerFactory")
-  public void listen(@Payload SimpleDto message) {
+  public void listen(@Payload Vehicle message) {
     logger.debug("Message received :{}", message);
 
-    mongoTemplate.insert(message, "collection1");
+    mongoTemplate.insert(message, "vehicles");
     logger.debug("1 message stored in db");
 
     latch.countDown();

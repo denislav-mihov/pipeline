@@ -15,6 +15,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -44,7 +45,7 @@ public class ConsumerControllerTest{
   public void testConsumeMessage_OK() throws Exception {
 
     // Produce a message
-    SimpleDto message = new SimpleDto("Paul", "ADMIN");
+    Vehicle message = new Vehicle("car", "VW", "Passat", 104000, new BigDecimal("12000"), "EUR");
 
     Map<String, Object> configs = new HashMap<>(KafkaTestUtils.producerProps(embeddedKafkaBroker));
     Producer<String, Object> producer = new DefaultKafkaProducerFactory<>(configs, new StringSerializer(), new JsonSerializer()).createProducer();

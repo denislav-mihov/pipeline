@@ -21,6 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getSingleRecord;
@@ -51,7 +52,7 @@ public class ProducerControllerTest{
   @Test
   public void testProduceMessage_OK() throws Exception {
 
-    SimpleDto message = new SimpleDto("Paul", "ADMIN");
+    Vehicle message = new Vehicle("car", "Audi", "A4", 85000, new BigDecimal("17000"), "EUR");
 
     // produce a message
     mockMvc.perform(

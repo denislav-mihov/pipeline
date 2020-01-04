@@ -34,7 +34,7 @@ public class ProducerController{
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public void produceMessage(
-    @RequestBody SimpleDto message
+    @RequestBody Vehicle message
   ) {
     kafkaTemplate.send(topicName, message);
     logger.debug("Message sent: {}", message);

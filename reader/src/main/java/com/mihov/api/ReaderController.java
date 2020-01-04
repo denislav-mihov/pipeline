@@ -23,7 +23,7 @@ public class ReaderController{
   }
 
   @GetMapping
-  public List<SimpleDto> getMessages() {
-    return mongoTemplate.findAll(SimpleDto.class, "collection1");
+  public List<Vehicle> getMessages() {
+    return mongoTemplate.findAll(Vehicle.class, "vehicles");
   }
 }
