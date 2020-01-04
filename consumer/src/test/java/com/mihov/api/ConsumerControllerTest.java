@@ -41,7 +41,7 @@ public class ConsumerControllerTest{
 
   @WithMockUser(value = "user1", password = "pass123")
   @Test
-  public void testProduceMessage_OK() throws Exception {
+  public void testConsumeMessage_OK() throws Exception {
 
     // Produce a message
     SimpleDto message = new SimpleDto("Paul", "ADMIN");

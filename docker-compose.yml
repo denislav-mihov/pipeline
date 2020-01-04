@@ -18,7 +18,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_INT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
-
+    depends_on:
+      - zookeeper
   mongo:
     image: mongo:latest
     container_name: mongodb
@@ -30,16 +31,28 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admindb
       - MONGO_INITDB_ROOT_PASSWORD=admindb
   producer:
-    image: dmihov/pipeline-producer
+    build:
+      context: .
+      dockerfile: ./producer/Dockerfile.producer
     container_name: producer
     ports:
       - "8081:8081"
+    depends_on:
+      - kafka
   consumer:
-    image: dmihov/pipeline-consumer
+    build:
+      context: .
+      dockerfile: ./consumer/Dockerfile.consumer
     container_name: consumer
+    depends_on:
+      - kafka
+      - mongo
   reader:
-    image: dmihov/pipeline-reader
+    build:
+      context: .
+      dockerfile: ./reader/Dockerfile.reader
     container_name: reader
     ports:
       - "8082:8082"
-
+    depends_on:
+      - mongo

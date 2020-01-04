@@ -2,11 +2,11 @@
 
 //mongo --authenticationDatabase "admin" -u "admindb" -p "admindb"
 
-use pipeline
+use pipelinedb
 db.createUser(
   {
     user: "clientdb",
     pwd:  "clientdb",
-    roles: [ { role: "readWrite", db: "pipeline" } ]
+    roles: [ { role: "readWrite", db: "pipelinedb" } ]
   }
 )
