@@ -1,5 +1,6 @@
 package com.mihov;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -21,14 +22,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+  @Value("${api.username}")
+  String username;
+
+  @Value("${api.password}")
+  String password;
+
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     auth.inMemoryAuthentication()
       .passwordEncoder(encoder)
-      .withUser("user1")
-      .password(encoder.encode("pass123"))
+      .withUser(username)
+      .password(encoder.encode(password))
       .roles("USER");
   }
 
