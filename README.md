@@ -56,13 +56,17 @@ Connect to the mongoDB container:
 ```
 $ docker exec -it mongodb bash
 ```
+**Note:** If you are running a Windows PC you might need to add `winpty` upfront.
+```
+$ winpty docker exec -it mongodb bash
+```
 
 Then start mongo shell by using admin credentials:
 ```
 # mongo --authenticationDatabase "admin" -u "admindb" -p "admindb"
 ```
 
-Switch to "pipelinedb" database (that would be the one used by our application) and create a user "clientdb" with password "clientdb".
+Switch to "pipelinedb" database (that would be the one used by our application) and create a user `clientdb` with password `clientdb` with the following script.
 ```
 use pipelinedb
 db.createUser(
@@ -74,14 +78,14 @@ db.createUser(
 )
 ```
 
-If you prefer to use different credentials please update them accordingly in the corresponding application.properties files in the project.
+If you prefer to use different credentials please update them accordingly in the corresponding `application.properties` files in the project.
 
 You can check if all containers are up and runnig by typing:
 ```
 $ docker-compose ps
 ```
 
-If OK you should see something similar to this - a total of 6 containers:
+If OK you should see something like this - a total of 6 containers:
 ```
   Name                 Command               State                         Ports
 -------------------------------------------------------------------------------------------------------
@@ -118,7 +122,7 @@ Example curl request for the reader endpoint:
 curl -X GET http://192.168.99.100:8082/pipeline/api/messages -H "Authorization: Basic dXNlcjE6cGFzczEyMw=="
 ```
 
-In the above examples 192.168.99.100 is the IP of the local docker machine, you should change that with yours. The ports are configured to 8081 for the producer service and 8082 for the reader service, so unless you change them in the configuration they could remain as they are.
+In the above examples `192.168.99.100` is the IP of the local docker machine, you should change that with yours. It is quite likely that you could use `localhost` with some docker installations. The ports are configured to `8081` for the producer service and `8082` for the reader service, so unless you change them in the configuration they could remain as they are.
 
 ### REST API documentation
 
@@ -144,7 +148,7 @@ http://192.168.99.100:8081/pipeline/swagger-ui.html
 http://192.168.99.100:8082/pipeline/swagger-ui.html
 ```
 
-Any of those links will require you to provide a username and password to access the data - the default ones user1/pass123.
+Any of those links will require you to provide a username and password to access the data - the default ones `user1/pass123`.
 
 
 ## Unit Tests
@@ -155,7 +159,7 @@ Unfortunately the tests are not fully independent from a running application.
 
 While EmbeddedKafka is used to replace the real kafka server in the tests, the ones that interact with mongoDB still need to access a runnig database - either the one which is configured in the container or a separate database running elsewhere.
 
-Also you will most probably need to adjust the mongoDB access uri with the corresponding hostname or ip and (eventually) changed user credentials in the application.properties file in the test package:
+Also you will most probably need to adjust the mongoDB access uri with the corresponding hostname or IP and (eventually) changed user credentials in the `application.properties` file in the test package:
 ```
 spring.data.mongodb.uri=mongodb://clientdb:clientdb@192.168.99.100:27017/pipelinedb?authSource=pipelinedb
 ```
