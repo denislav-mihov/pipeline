@@ -44,8 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     http
       .csrf().disable()
       .authorizeRequests()
-      .anyRequest()
-      .authenticated()
+      .antMatchers("/actuator/prometheus").permitAll()
+      .anyRequest().authenticated()
       .and()
       .httpBasic()
       .and()

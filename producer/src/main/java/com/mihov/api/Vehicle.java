@@ -1,5 +1,8 @@
 package com.mihov.api;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -9,7 +12,9 @@ import java.util.Objects;
  * @author Denis
  */
 public class Vehicle{
+  @NotEmpty
   String     type;
+  @Length(max = 10)
   String     make;
   String     model;
   Integer    mileage;

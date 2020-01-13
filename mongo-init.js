@@ -1,11 +1,12 @@
 // After starting the mongo container do the following to create a database user for the application
-//
 // Connect to the container:
-// winpty docker exec -it mongodb bash
-//
+
+winpty docker exec -it mongodb bash
+
 // Connect to mongo shell as admin:
-// mongo --authenticationDatabase "admin" -u "admindb" -p "admindb"
-//
+
+mongo --authenticationDatabase "admin" -u "admindb" -p "admindb"
+
 // Run the following statement
 
 use pipelinedb
